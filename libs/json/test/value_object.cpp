@@ -11,6 +11,9 @@
 
 namespace json = ciere::json;
 
+BOOST_TEST_DONT_PRINT_LOG_VALUE(json::value::object_iterator)
+BOOST_TEST_DONT_PRINT_LOG_VALUE(json::value::const_object_iterator)
+
 void const_test_f( json::value const & value );
 
 BOOST_AUTO_TEST_CASE(all)

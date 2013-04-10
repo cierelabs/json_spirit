@@ -29,6 +29,6 @@ unit-test value_array
    : value_array.cpp
    ;
 
-# unit-test value_object
-#    : value_object.cpp
-#    ;
+unit-test value_object
+   : value_object.cpp
+   ;
