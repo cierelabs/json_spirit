@@ -1,9 +1,8 @@
 #define BOOST_TEST_MODULE construct
 
 #include <boost/test/unit_test.hpp>
-
-#include <ciere/json/io.hpp>
-#include <ciere/json/value.hpp>
+#include "ciere/json/io.hpp"
+#include "ciere/json/value.hpp"
 
 #include <string>
 
@@ -86,5 +85,26 @@ BOOST_AUTO_TEST_CASE(string)
    BOOST_CHECK_EQUAL(json::construct("[8,42.5,true] \"foo\"", v       ), true);
    BOOST_CHECK_EQUAL(json::construct("[8,42.5,true] \"foo\"", v, false), true);
    BOOST_CHECK_EQUAL(json::construct("[8,42.5,true] \"foo\"", v, true ), false);
+
+   BOOST_CHECK_EQUAL(json::construct("{ \"foo\" : \"bar\"}", v , true ), true);
+   BOOST_CHECK_EQUAL(json::construct("[8,42.5,true] \"foo\"", v, false), true);
+   BOOST_CHECK_EQUAL(json::construct("[8,42.5,true] \"foo\"", v, true ), false);
+
+
+   json::construct(
+      "{"
+      "   \"foo\"  : 42    ,"
+      "   \"bar\"  : 498.5 ,"
+      "   \"gorp\" : \"ciere\","
+      "   \"bork\" : [\"ciere\",23,false]"
+      "}"
+      , v
+      );
+
+   BOOST_CHECK_EQUAL( v["foo"], 42 );
+   BOOST_CHECK_EQUAL( v["bar"], 498.5 );
+   BOOST_CHECK_EQUAL( v["gorp"], "ciere" );
+   BOOST_CHECK_EQUAL( v["bork"][2], false );
+
 }
 

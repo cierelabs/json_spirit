@@ -102,7 +102,7 @@ namespace ciere { namespace json { namespace parser
          double_quoted =
               '"'
             > *(  char_esc(_val)
-                | (char_("\x20\x21\x23-\x5b\x5d-\xff")  )    [_val += _1]
+                | (char_("\x20\x21\x23-\x5b\x5d-\x7e")  )    [_val += _1]
                )
             > '"'
             ;

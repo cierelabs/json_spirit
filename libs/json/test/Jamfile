@@ -21,7 +21,14 @@ unit-test construct
    : construct.cpp
    ;
 
-
-unit-test foo
-   : foo.cpp
+unit-test value_basic
+   : value_basic.cpp
    ;
+
+unit-test value_array
+   : value_array.cpp
+   ;
+
+# unit-test value_object
+#    : value_object.cpp
+#    ;
