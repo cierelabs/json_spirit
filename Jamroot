@@ -18,6 +18,7 @@ if $(BOOST_ROOT)
 project
    : requirements
       <toolset>gcc:<cxxflags>-ftemplate-depth=300
+      <toolset>msvc:<cxxflags>/wd4996
    ;
 
 lib json
