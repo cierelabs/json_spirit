@@ -1,0 +1,25 @@
+
+----------------
+Not Header-only :
+
+Most methods in the ciere::json library do not require client
+usage signatures that are determined at compile time. As such,
+a choice must be made about "header-only" simply for the sake
+of header-only. The trade off is understanding your build
+system and the need to link versus reocurring compile time
+penalties. The use of Spirit for the parser and othe 
+template meta-programming techniques results in longish
+compile times. The author strongly believes that header-only
+libraries simply because people don't know how to use linkers
+anymore isnt a good price to pay.
+
+Within the normal usage patterns the library should only
+need to be built once and can then simply be linked. If
+the streams or iterators you work with fall outside of
+the normal pre-compiled versions then an additional
+declaration may be required. Please see the compile
+and linking section for details on how to achieve optimal
+flexibility and reduced compile times with the ciere::json
+library.
+
+
