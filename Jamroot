@@ -18,12 +18,14 @@ if $(BOOST_ROOT)
 project
    : requirements
       <toolset>gcc:<cxxflags>-ftemplate-depth=300
+      <toolset>msvc:<cxxflags>/wd4996
    ;
 
 lib json
    : [ glob libs/json/src/*.cpp ]
      /boost//headers
    : <include>.
+     <toolset>msvc:<link>static
    :
    : <include>.
      <source>/boost//headers
