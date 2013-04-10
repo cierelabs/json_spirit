@@ -24,6 +24,7 @@ lib json
    : [ glob libs/json/src/*.cpp ]
      /boost//headers
    : <include>.
+     <toolset>msvc:<link>static
    :
    : <include>.
      <source>/boost//headers
