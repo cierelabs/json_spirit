@@ -32,3 +32,20 @@ unit-test value_array
 unit-test value_object
    : value_object.cpp
    ;
+
+unit-test value_non_container
+   : value_non_container.cpp
+   ;
+
+unit-test get
+   : get.cpp
+   ;
+
+unit-test get_as
+   : get_as.cpp
+   ;
+
+unit-test parser_test
+   : parser_test.cpp
+   ;
+

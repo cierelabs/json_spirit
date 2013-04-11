@@ -19,6 +19,7 @@ namespace ciere { namespace json
    struct not_object_type    : virtual json::exception    {};
    struct not_array_type     : virtual json::exception    {};
    struct not_number_type    : virtual json::exception    {};
+   struct get_error          : virtual json::exception    {};
    struct get_as_error       : virtual json::exception    {};
    struct parse_error        : virtual json::exception    {};
 }}
