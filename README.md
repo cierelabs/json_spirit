@@ -54,13 +54,13 @@ which would result in:
 Building
 ---------
 
-We have Boost.Build support right now. CMake is coming soon.
+We have Boost.Build and CMake support.
 
-Assumes either your user-config.jam file has a line like this:
+For Boost.Build, we assume either your user-config.jam file has a line like this:
 
     use-project /boost	:	/sandbox/boost/trunk ;
 
-or set the environment variable BOOST_ROOT to the location of
+or you have set the environment variable BOOST_ROOT to the location of
 the boost version you want to use.
 
 You can build the library via:
@@ -73,6 +73,19 @@ You can build the tests via:
 
     cd json_spirit/libs/json/test
     bjam
+
+For CMake, do this to build the library:
+
+    cd json_spirit
+    mkdir build
+    cd build
+    cmake ..
+    make
+
+You may specify the version of Boost to build against by defining BOOST_ROOT on the CMake
+command line like this:
+
+    cmake -DBOOST_ROOT=/sandbox/boost/trunk ..
 
 
 Documentation
