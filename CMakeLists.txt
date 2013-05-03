@@ -1,3 +1,4 @@
+# Main CMake build control file for json_spirit
 # Copyright (C) 2013 Jeff Trull <edaskel@att.net>
 #
 #   Distributed under the Boost Software License, Version 1.0. (See accompanying
