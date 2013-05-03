@@ -87,11 +87,15 @@ command line like this:
 
     cmake -DBOOST_ROOT=/sandbox/boost/trunk ..
 
+To run the unit tests:
+
+    make test
 
 Documentation
 --------------
 
-Coming soon.
+Coming soon.  Unit tests located in libs/json/test/*.cpp provide a good starting point for exploration of the functionality.
 
-
-
+Licensing
+---------
+json_spirit is licensed under the Boost Software License.  See LICENSE_1_0.txt for details.
