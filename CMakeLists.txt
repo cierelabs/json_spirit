@@ -10,6 +10,8 @@
 
 cmake_minimum_required( VERSION 2.8 )
 
+project( json_spirit )
+
 if( CMAKE_COMPILER_IS_GNUCXX )
   add_definitions( -ftemplate-depth=300 )
 elseif( MSVC )
