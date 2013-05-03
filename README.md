@@ -9,17 +9,6 @@ json object that could be manipulated much like in javascript or python.
 Quick Example
 -------------
 
-json spirit
-===========
-
-A json library using Boost.Spirit 2.x for the parser.
-
-The primary goal of the json spirit library was to create a conformant json parser that resulted in a
-json object that could be manipulated much like in javascript or python.
-
-Quick Example
--------------
-
 ```c++
 // the json::value is the primary data type
 // you can simply assign it values
