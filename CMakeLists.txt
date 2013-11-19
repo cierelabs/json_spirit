@@ -12,11 +12,18 @@ cmake_minimum_required( VERSION 2.8 )
 
 project( json_spirit )
 
-if( CMAKE_COMPILER_IS_GNUCXX )
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  add_definitions( -std=c++11 )
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   add_definitions( -ftemplate-depth=300 )
-elseif( MSVC )
+  add_definitions( -std=c++0x )
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   add_definitions( /wd4996 )
 endif()
+
+# Enable V3 of Phoenix by default. V2 has some issues with C++11
+# compilers.
+add_definitions( -DBOOST_SPIRIT_USE_PHOENIX_V3=1 )
 
 find_package( Boost COMPONENTS unit_test_framework REQUIRED )
 include_directories( . ${Boost_INCLUDE_DIRS} )
