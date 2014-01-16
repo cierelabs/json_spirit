@@ -181,9 +181,15 @@ namespace ciere { namespace json
       }
       catch(spirit::qi::expectation_failure<iterator_t> const &){}
 
+      // note: the above eats one too many characters from the
+      // input stream.  I don't know where this comes from, so this
+      // is likely not the correct way to fix this, but I need
+      // this now 
+      input.unget();
+
       if(skipws_was_set)
       {
-         input.unsetf(std::ios::skipws);
+         input.setf(std::ios::skipws);
       }
 
       return parse_success;

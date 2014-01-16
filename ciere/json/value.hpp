@@ -21,6 +21,7 @@
 #include <boost/type_traits/is_floating_point.hpp>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/cstdint.hpp>
 
 #include <map>
 #include <string>
@@ -28,6 +29,7 @@
 
 namespace ciere { namespace json
 {
+   using namespace boost;
    // ------------------- ast types --------------------
    //
    typedef std::string                                  string_t;
@@ -42,12 +44,9 @@ namespace ciere { namespace json
    typedef std::pair<std::string, value>                object_member_t;
    typedef boost::container::stable_vector<value>       array_t;
 
-
    // nulls always compare
    inline bool operator==(null_t,null_t) { return true;  }
    inline bool operator!=(null_t,null_t) { return false; }
-
-
 
    /**
     *  possible types being stored in the json::value
@@ -63,7 +62,6 @@ namespace ciere { namespace json
       object_type,
       array_type
    };
-
 
    /**
     *
@@ -210,8 +208,6 @@ namespace ciere { namespace json
          // -------------------------------------------------------------------------------
          // -------------------------------------------------------------------------------
 
-
-
          // -------------------------------------------------------------------------------
          //    array handling
          // -------------------------------------------------------------------------------
@@ -257,7 +253,6 @@ namespace ciere { namespace json
           */
          value & erase(int index);
 
-
          /**
           *  Returns the number of elements stored if the value is holding an array or
           *  object type. If it is not an array or object type the method throws
@@ -267,7 +262,6 @@ namespace ciere { namespace json
 
          // -------------------------------------------------------------------------------
          // -------------------------------------------------------------------------------
-
 
          // -------------------------------------------------------------------------------
          //    object handling
@@ -345,11 +339,9 @@ namespace ciere { namespace json
          // -------------------------------------------------------------------------------
          // -------------------------------------------------------------------------------
 
-
          base_type::variant_type       & get_ast()       { return base_type::get(); }
          base_type::variant_type const & get_ast() const { return base_type::get(); }
    };
-
 
    /**
     *  Constructs a value containing an array type
@@ -364,7 +356,6 @@ namespace ciere { namespace json
    bool operator==(value const & a, value const & b);
    bool operator!=(value const & a, value const & b);
    bool operator<(value const & a, value const & b);
-
 }}
 
 #include "detail/value_impl.hpp"
