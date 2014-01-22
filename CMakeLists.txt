@@ -21,6 +21,10 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   add_definitions( /wd4996 )
 endif()
 
+if( CMAKE_HOST_APPLE )
+  set (CMAKE_OSX_ARCHITECTURES "x86_64" )
+endif()
+
 # Enable V3 of Phoenix by default. V2 has some issues with C++11
 # compilers.
 add_definitions( -DBOOST_SPIRIT_USE_PHOENIX_V3=1 )
