@@ -74,7 +74,6 @@ namespace ciere { namespace json { namespace parser
          qi::_val_type _val;
          qi::_r1_type _r1;
          qi::_1_type _1;
-         qi::_2_type _2;
          qi::lit_type lit;
          qi::repeat_type repeat;
          qi::hex_type hex;
@@ -115,7 +114,6 @@ namespace ciere { namespace json { namespace parser
    grammar<Iterator>::grammar()
       : grammar::base_type( value )
    {
-      qi::_val_type            _val;
       qi::lit_type             lit;
       ascii::char_type         char_;
       ascii::digit_type        digit;
