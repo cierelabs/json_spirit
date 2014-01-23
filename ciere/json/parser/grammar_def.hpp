@@ -32,7 +32,7 @@ namespace ciere { namespace json { namespace parser
    {
       struct push_utf8
       {
-         template <typename S, typename C>
+         template <typename Sig>
          struct result { typedef void type; };
 
          void operator()(std::string& utf8, uchar code_point) const
@@ -46,7 +46,7 @@ namespace ciere { namespace json { namespace parser
 
       struct push_esc
       {
-         template <typename S, typename C>
+         template <typename Sig>
          struct result { typedef void type; };
 
          void operator()(std::string& utf8, uchar c) const
