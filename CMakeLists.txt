@@ -8,9 +8,11 @@
 # CMake build control file for json_spirit
 # Created following settings in Jamroot and libs/json/test/Jamfile
 
-cmake_minimum_required( VERSION 2.8 )
+cmake_minimum_required( VERSION 2.8.11 )
 
 project( json_spirit )
+
+option(JSON_SPIRIT_DEBUG_PARSER "Trace spirit parser in Debug config" OFF)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   add_definitions( -std=c++11 )
@@ -34,6 +36,12 @@ include_directories( . ${Boost_INCLUDE_DIRS} )
 
 file( GLOB SRC_FILES libs/json/src/*.cpp )
 add_library( json STATIC ${SRC_FILES} )
+
+if(JSON_SPIRIT_DEBUG_PARSER)
+  target_compile_definitions(
+      json PUBLIC "$<$<CONFIG:Debug>:BOOST_SPIRIT_DEBUG>"
+  )
+endif()
 
 enable_testing()
 
