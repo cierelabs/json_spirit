@@ -8,7 +8,7 @@
 # CMake build control file for json_spirit
 # Created following settings in Jamroot and libs/json/test/Jamfile
 
-cmake_minimum_required( VERSION 2.8 )
+cmake_minimum_required( VERSION 2.8.11 )
 
 project( json_spirit )
 
