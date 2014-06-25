@@ -19,6 +19,8 @@
 #include <boost/spirit/include/qi.hpp>
 #include <string>
 
+#include <ciere/json/io.hpp> // BOOST_SPIRIT_DEBUG_NODE
+
 namespace ciere { namespace json { namespace parser
 {
 
@@ -105,6 +107,10 @@ namespace ciere { namespace json { namespace parser
                )
             > '"'
             ;
+
+         BOOST_SPIRIT_DEBUG_NODE(escape);
+         BOOST_SPIRIT_DEBUG_NODE(char_esc);
+         BOOST_SPIRIT_DEBUG_NODE(double_quoted);
       }
 
    }  // end detail
@@ -155,6 +161,12 @@ namespace ciere { namespace json { namespace parser
             lit("null")
          >> attr(json::null_t())
          ;
+
+      BOOST_SPIRIT_DEBUG_NODE(value);
+      BOOST_SPIRIT_DEBUG_NODE(object);
+      BOOST_SPIRIT_DEBUG_NODE(member_pair);
+      BOOST_SPIRIT_DEBUG_NODE(array);
+      BOOST_SPIRIT_DEBUG_NODE(null_value);
    }
 
 }}}
