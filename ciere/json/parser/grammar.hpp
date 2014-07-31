@@ -22,8 +22,50 @@ namespace ciere { namespace json { namespace parser
    namespace qi      = boost::spirit::qi;
    namespace ascii   = boost::spirit::ascii;
 
+   typedef boost::uint32_t uchar; // a unicode code point
+
    namespace detail
    {
+      struct push_utf8
+      {
+         template <typename Sig>
+         struct result { typedef void type; };
+
+         push_utf8(uchar* code_point): prev_code_point(code_point) {}
+         void operator()(std::string& utf8, uchar code_point) const;
+         mutable uchar* prev_code_point;
+      };
+
+      struct push_esc
+      {
+         template <typename Sig>
+         struct result { typedef void type; };
+
+         push_esc(uchar* code_point): prev_code_point(code_point) {}
+         void operator()(std::string& utf8, uchar c) const;
+         mutable uchar* prev_code_point;
+      };
+
+      struct push_char
+      {
+         template <typename Sig>
+         struct result { typedef void type; };
+
+         push_char(uchar* code_point): prev_code_point(code_point) {}
+         void operator()(std::string& utf8, uchar c) const;
+         mutable uchar* prev_code_point;
+      };
+
+      struct check
+      {
+         template <typename Sig>
+         struct result { typedef void type; };
+
+         check(uchar* code_point): prev_code_point(code_point) {}
+         void operator()(void) const;
+         mutable uchar* prev_code_point;
+      };
+
       template <typename Iterator>
       struct unicode_string : qi::grammar<Iterator, std::string()>
       {
@@ -31,6 +73,11 @@ namespace ciere { namespace json { namespace parser
          qi::rule<Iterator, void(std::string&)> escape;
          qi::rule<Iterator, void(std::string&)> char_esc;
          qi::rule<Iterator, std::string()> double_quoted;
+         uchar code_point;
+         push_utf8 push_utf8_;
+         push_esc push_esc_;
+         push_char push_char_;
+         check check_;
       };
    }
 

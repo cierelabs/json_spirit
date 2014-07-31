@@ -89,6 +89,13 @@ BOOST_AUTO_TEST_CASE(string)
    BOOST_CHECK_EQUAL(
       json::construct("\"\\u26030\""), std::string("\xe2\x98\x83\x30"));
 
+   // U+064321 = D950 DF21 (UTF-16) = F1 A4 8C A1 (UTF-8)
+   BOOST_CHECK_EQUAL(
+      json::construct("\"\\ud950\\udf21\""), std::string("\xf1\xa4\x8c\xa1"));
+   BOOST_CHECK_THROW(json::construct("\"\\ud950\""), json::parse_error);
+   BOOST_CHECK_THROW(json::construct("\"\\ud9500\""), json::parse_error);
+   BOOST_CHECK_THROW(json::construct("\"\\udf21\""), json::parse_error);
+
    json::value v;
    BOOST_CHECK_EQUAL(json::construct("[8,42.5,true] \"foo\"", v       ), true);
    BOOST_CHECK_EQUAL(json::construct("[8,42.5,true] \"foo\"", v, false), true);
