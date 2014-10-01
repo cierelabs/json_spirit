@@ -63,6 +63,11 @@ namespace ciere { namespace json
             stream << '"';
          }
 
+         void operator()(int_t v) const
+         {
+            stream << std::dec << v;
+         }
+
          template< typename T >
          void operator()(T const & v) const
          {
