@@ -82,6 +82,8 @@ namespace ciere { namespace json
       public:
          // -------------------------------------------------------------------------------
          // -------------------------------------------------------------------------------
+         typedef value value_type;
+      
          value(null_t val = null_t())     : base_type(val) {}
          value(bool_t val)                : base_type(val) {}
          value(string_t const & val)      : base_type(val) {}
