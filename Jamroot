@@ -22,16 +22,13 @@ project
       <toolset>clang:<cxxflags>-std=c++11
       <toolset>msvc:<cxxflags>/wd4996
       <define>BOOST_SPIRIT_USE_PHOENIX_V3=1
+      <use>/boost//headers
+      <include>.
    ;
 
 lib json
    : [ glob libs/json/src/*.cpp ]
-     /boost//headers
-   : <include>.
-     <toolset>msvc:<link>static
-   :
-   : <include>.
-     <source>/boost//headers
+   : <toolset>msvc:<link>static
    ;
 
 build-project libs/json/test ;
