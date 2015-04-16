@@ -15,5 +15,7 @@
 
 typedef std::string::const_iterator string_iter_t;
 
+#if !defined(CIERE_JSON_USE_SPIRIT_X3)
 template struct ciere::json::parser::grammar<string_iter_t>;
 template struct ciere::json::parser::grammar<boost::spirit::istream_iterator>;
+#endif

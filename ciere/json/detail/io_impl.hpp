@@ -163,15 +163,18 @@ namespace ciere { namespace json
    inline bool construct(std::istream & input, value & v)
    {
       typedef spirit::istream_iterator iterator_t;
+#if !defined(CIERE_JSON_USE_SPIRIT_X3)
       typedef parser::grammar<iterator_t> grammar_t;
+#endif
 
       bool skipws_was_set = input.flags() & std::ios::skipws;
       input.unsetf(std::ios::skipws);
 
       iterator_t iterator(input), end;
-
-      grammar_t grammar;
       bool parse_success = false;
+
+#if !defined(CIERE_JSON_USE_SPIRIT_X3)
+      grammar_t grammar;
       try
       {
          parse_success = spirit::qi::phrase_parse( iterator, end
@@ -180,6 +183,7 @@ namespace ciere { namespace json
                                                  , v );
       }
       catch(spirit::qi::expectation_failure<iterator_t> const &){}
+#endif
 
       if(skipws_was_set)
       {
@@ -204,10 +208,13 @@ namespace ciere { namespace json
    template<typename Iterator>
    bool construct(Iterator & iter, Iterator const & iter_end, value & v)
    {
+#if !defined(CIERE_JSON_USE_SPIRIT_X3)
       typedef parser::grammar<Iterator> grammar_t;
       grammar_t grammar;
+#endif
 
       bool parse_success = false;
+#if !defined(CIERE_JSON_USE_SPIRIT_X3)
       try
       {
          parse_success = spirit::qi::phrase_parse( iter, iter_end
@@ -216,6 +223,7 @@ namespace ciere { namespace json
                                                  , v );
       }
       catch(spirit::qi::expectation_failure<Iterator> const &){}
+#endif
 
       return parse_success;
    }
