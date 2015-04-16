@@ -114,5 +114,7 @@ BOOST_AUTO_TEST_CASE(string)
    BOOST_CHECK_EQUAL( v["gorp"], "ciere" );
    BOOST_CHECK_EQUAL( v["bork"][2], false );
 
+   json::construct("{ \"foo\" : \"\xe2\x98\x83\" }", v);
+   BOOST_CHECK_EQUAL(v["foo"], "\xe2\x98\x83");
 }
 
