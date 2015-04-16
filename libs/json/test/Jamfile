@@ -10,9 +10,7 @@ import testing ;
 
 project
    : requirements
-      <include>../../../
       <source>../../..//json
-      <source>/boost//headers
       <source>/boost//unit_test_framework
       <toolset>gcc:<cxxflags>-ftemplate-depth=300
       <toolset>darwin:<cxxflags>-ftemplate-depth=300
