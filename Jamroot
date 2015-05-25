@@ -18,19 +18,24 @@ if $(BOOST_ROOT)
 project
    : requirements
       <toolset>gcc:<cxxflags>-ftemplate-depth=300
-      <toolset>gcc:<cxxflags>-std=c++0x
+      <toolset>gcc:<cxxflags>-std=c++14
       <toolset>darwin:<cxxflags>-ftemplate-depth=300
       <toolset>darwin:<cxxflags>-std=c++0x
       <toolset>clang:<cxxflags>-std=c++11
       <toolset>msvc:<cxxflags>/wd4996
       <define>BOOST_SPIRIT_USE_PHOENIX_V3=1
+      <define>CIERE_JSON_USE_SPIRIT_X3
       <use>/boost//headers
       <include>.
+   : usage-requirements
+      <include>.
+      <define>CIERE_JSON_USE_SPIRIT_X3
    ;
 
 lib json
    : [ glob libs/json/src/*.cpp ]
    : <toolset>msvc:<link>static
+     <include>.
    ;
 
 build-project libs/json/test ;

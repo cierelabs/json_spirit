@@ -11,8 +11,7 @@
 
 #define BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
 
-#include "grammar.hpp"
-
+#include <ciere/json/parser/grammar.hpp>
 #include <boost/fusion/adapted/std_pair.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>

@@ -11,8 +11,7 @@
 
 #define BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
 
-#include "grammar.hpp"
-
+#include <ciere/json/parser/grammar.hpp>
 #include <boost/fusion/adapted/std_pair.hpp>
 #include <string>
 
@@ -54,6 +53,7 @@ namespace ciere { namespace json { namespace parser
       using x3::char_;
       using x3::hex;
       using x3::uint_parser;
+      using x3::lexeme;
 
       uint_parser<uchar, 16, 4, 4> const hex4 = {};
 
@@ -73,11 +73,11 @@ namespace ciere { namespace json { namespace parser
       auto const append = [](auto& ctx) { _val(ctx) += _attr(ctx); };
       
       auto const double_quoted =
-           '"'
+           lexeme[ '"'
          > *(  char_esc
              | (char_("\x20\x21\x23-\x5b\x5d-\x7e")  )    [append]
             )
-         > '"'
+         > '"' ]
          ;
       
       struct unicode_string_class;

@@ -9,8 +9,7 @@
 #ifndef CIERE_JSON_IO_HPP
 #define CIERE_JSON_IO_HPP
 
-#include "value.hpp"
-
+#include <ciere/json/value.hpp>
 #include <iostream>
 #include <string>
 

@@ -9,8 +9,9 @@
 #ifndef CIERE_JSON_DETAIL_IO_IMPL_HPP
 #define CIERE_JSON_DETAIL_IO_IMPL_HPP
 
-#include "../exception.hpp"
-#include "../parser/grammar.hpp"
+#include <ciere/json/exception.hpp>
+#include <ciere/json/parser/grammar.hpp>
+#include <ciere/json/parser/grammar_def.hpp>
 
 #include <boost/foreach.hpp>
 #include <boost/spirit/include/qi_expect.hpp>
@@ -211,6 +212,8 @@ namespace ciere { namespace json
 #if !defined(CIERE_JSON_USE_SPIRIT_X3)
       typedef parser::grammar<Iterator> grammar_t;
       grammar_t grammar;
+#else
+      auto const grammar = ciere::json::parser::value;
 #endif
 
       bool parse_success = false;
@@ -223,6 +226,15 @@ namespace ciere { namespace json
                                                  , v );
       }
       catch(spirit::qi::expectation_failure<Iterator> const &){}
+#else
+      try
+      {
+         parse_success = spirit::x3::phrase_parse( iter, iter_end
+                                                 , grammar
+                                                 , spirit::x3::ascii::space_type{}
+                                                 , v );
+      }
+      catch(spirit::x3::expectation_failure<Iterator> const &){}
 #endif
 
       return parse_success;

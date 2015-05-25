@@ -9,8 +9,8 @@
 #define BOOST_TEST_MODULE construct
 
 #include <boost/test/unit_test.hpp>
-#include "ciere/json/io.hpp"
-#include "ciere/json/value.hpp"
+#include <ciere/json/io.hpp>
+#include <ciere/json/value.hpp>
 
 #include <string>
 
@@ -61,6 +61,8 @@ BOOST_AUTO_TEST_CASE(string)
    BOOST_CHECK_EQUAL(json::construct("\"\""), "");
    BOOST_CHECK_EQUAL(json::construct("\" \""), " ");
    BOOST_CHECK_EQUAL(json::construct("\"X\""), "X");
+   BOOST_CHECK_EQUAL(json::construct("\"X \""), "X ");
+   BOOST_CHECK_EQUAL(json::construct("\" X \""), " X ");
 
    BOOST_CHECK_THROW(json::construct("\"\"\"",true), json::parse_error);
    BOOST_CHECK_THROW(json::construct("\"\\\""), json::parse_error);

@@ -10,8 +10,7 @@
 
 #define BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
 
-#include "../value.hpp"
-
+#include <ciere/json/value.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <string>
 
