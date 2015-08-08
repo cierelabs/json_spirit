@@ -13,6 +13,7 @@ project
       <source>../../..//json
       <source>/boost//unit_test_framework
       <toolset>gcc:<cxxflags>-ftemplate-depth=300
+      <toolset>darwin:<cxxflags>-ftemplate-depth=300
    ;
 
 unit-test construct
@@ -46,4 +47,3 @@ unit-test get_as
 unit-test parser_test
    : parser_test.cpp
    ;
-
