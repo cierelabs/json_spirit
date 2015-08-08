@@ -1,4 +1,5 @@
 *.[oa]
 *~
 
+/bin/
 *.DS_Store

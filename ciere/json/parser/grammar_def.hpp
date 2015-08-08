@@ -19,6 +19,8 @@
 #include <boost/spirit/include/qi.hpp>
 #include <string>
 
+#include <ciere/json/io.hpp> // BOOST_SPIRIT_DEBUG_NODE
+
 namespace ciere { namespace json { namespace parser
 {
 
@@ -77,6 +79,7 @@ namespace ciere { namespace json { namespace parser
          qi::lit_type lit;
          qi::repeat_type repeat;
          qi::hex_type hex;
+         qi::standard::cntrl_type cntrl;
 
          using boost::spirit::qi::uint_parser;
          using boost::phoenix::function;
@@ -101,10 +104,14 @@ namespace ciere { namespace json { namespace parser
          double_quoted =
               '"'
             > *(  char_esc(_val)
-                | (char_("\x20\x21\x23-\x5b\x5d-\x7e")  )    [_val += _1]
+                | (char_ - '"' - '\\' - cntrl)    [_val += _1]
                )
             > '"'
             ;
+
+         BOOST_SPIRIT_DEBUG_NODE(escape);
+         BOOST_SPIRIT_DEBUG_NODE(char_esc);
+         BOOST_SPIRIT_DEBUG_NODE(double_quoted);
       }
 
    }  // end detail
@@ -155,6 +162,12 @@ namespace ciere { namespace json { namespace parser
             lit("null")
          >> attr(json::null_t())
          ;
+
+      BOOST_SPIRIT_DEBUG_NODE(value);
+      BOOST_SPIRIT_DEBUG_NODE(object);
+      BOOST_SPIRIT_DEBUG_NODE(member_pair);
+      BOOST_SPIRIT_DEBUG_NODE(array);
+      BOOST_SPIRIT_DEBUG_NODE(null_value);
    }
 
 }}}
