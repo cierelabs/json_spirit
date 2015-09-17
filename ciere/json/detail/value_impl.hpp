@@ -45,6 +45,7 @@ namespace ciere { namespace json
          static R apply( T const & v
                        , typename boost::enable_if<boost::is_convertible<R,T> >::type* dummy=0 )
          {
+            (void)dummy;
             return v;
          }
 
@@ -58,6 +59,8 @@ namespace ciere { namespace json
          static R apply( T const & v
                        , typename boost::disable_if<boost::is_convertible<R,T> >::type* dummy=0 )
          {
+            (void)v;
+            (void)dummy;
             throw get_as_error();
             return R();
          }
@@ -94,6 +97,7 @@ namespace ciere { namespace json
          template<typename T>
          static string_t apply( T const & v )
          {
+            (void)v;
             throw get_as_error();
             return "";
          }
@@ -107,6 +111,7 @@ namespace ciere { namespace json
          static bool_t apply( T const & v
                             , typename boost::enable_if<boost::is_convertible<bool_t,T> >::type* dummy=0 )
          {
+            (void)dummy;
             return v;
          }
 
@@ -120,6 +125,8 @@ namespace ciere { namespace json
          static bool_t apply( T const & v
                             , typename boost::disable_if<boost::is_convertible<bool_t,T> >::type* dummy=0 )
          {
+            (void)v;
+            (void)dummy;
             throw get_as_error();
             return false;
          }
