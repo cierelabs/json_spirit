@@ -79,11 +79,11 @@ if( JSON_SPIRIT_FUZZING )
   endif()
 
   if( AFL )
-    if( SANITIZER EQUAL "address" )
+    if( SANITIZER STREQUAL "address" )
       # add "hardening options"
       set( FUZZ_TARGET_COMPILE_FLAGS "${FUZZ_TARGET_COMPILE_FLAGS} -D_FORTIFY_SOURCE=2 -fstack-protector-all" )
-    elseif( SANITIZER EQUAL "memory" )
-      set( FUZZ_TARGET_COMPILE_FLAGS "${FUZZ_TARGET_COMPILE_FLAGS} -sanitize-memory-track-origins=2" )
+    elseif( ${SANITIZER} STREQUAL "memory" )
+      set( FUZZ_TARGET_COMPILE_FLAGS "${FUZZ_TARGET_COMPILE_FLAGS} -fsanitize-memory-track-origins" )
     endif()
   elseif( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" )
     # assuming libFuzzer
