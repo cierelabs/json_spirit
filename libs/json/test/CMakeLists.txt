@@ -43,8 +43,6 @@ if( JSON_SPIRIT_FUZZING )
   elseif( ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" ) AND LLVM_ROOT )
     # Build the libFuzzer-based fuzzer
     add_executable( fuzzer fuzz_lib.cpp )
-    set_target_properties( fuzzer PROPERTIES COMPILE_FLAGS "-fsanitize-coverage=edge"
-                                             LINK_FLAGS    "-fsanitize-coverage=edge" )
 
     # and the library it depends on
     file(GLOB LIBFUZZ_SOURCES ${LLVM_ROOT}/lib/Fuzzer/*.cpp)
