@@ -1,5 +1,5 @@
 # CMake build control file for json_spirit unit tests
-# Copyright (C) 2013 Jeff Trull <edaskel@att.net>
+# Copyright (C) 2013, 2015 Jeff Trull <edaskel@att.net>
 #
 #   Distributed under the Boost Software License, Version 1.0. (See accompanying
 #   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -32,7 +32,32 @@ endif()
 foreach( tname
     construct value_basic value_array value_object value_non_container get get_as parser_test )
   add_executable( ${tname} ${tname}.cpp )
-  target_link_libraries( ${tname} json ${Boost_LIBRARIES} )
+  target_link_libraries( ${tname} json ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY} )
   add_test( ${tname} ${tname} )
 endforeach()
 
+# if fuzzing is enabled, produce the extra fuzzer target
+if( JSON_SPIRIT_FUZZING )
+  if( AFL )
+    add_executable( fuzzer fuzz_afl.cpp )
+  elseif( ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" ) AND LLVM_ROOT )
+    # Build the libFuzzer-based fuzzer
+    add_executable( fuzzer fuzz_lib.cpp )
+    set_target_properties( fuzzer PROPERTIES COMPILE_FLAGS "-fsanitize-coverage=edge"
+                                             LINK_FLAGS    "-fsanitize-coverage=edge" )
+
+    # and the library it depends on
+    file(GLOB LIBFUZZ_SOURCES ${LLVM_ROOT}/lib/Fuzzer/*.cpp)
+    include_directories( ${LLVM_ROOT}/lib/Fuzzer )
+    add_library( fuzz ${LIBFUZZ_SOURCES} )
+    target_link_libraries( fuzzer fuzz )
+
+  else()
+    message( FATAL "Don't know which fuzzer to build - afl compilers not in use and Clang+LLVM_ROOT not specified" )
+  endif()
+
+  target_link_libraries( fuzzer json_fuzz ${Boost_LOCALE_LIBRARY} )
+  set_target_properties( fuzzer PROPERTIES COMPILE_FLAGS ${FUZZ_TARGET_COMPILE_FLAGS}
+                                           LINK_FLAGS    ${FUZZ_TARGET_LINK_FLAGS} )
+
+endif()
