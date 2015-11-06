@@ -54,7 +54,7 @@ if( JSON_SPIRIT_FUZZING )
   # libs/json/test/fuzzer -max_len=256 -jobs=2 /path/to/corpus
 
   # AFL via Clang "fast" instrumentation
-  # cmake -DCMAKE_CXX_COMPILER=/path/to/afl/afl-clang-fast++ -DJSON_SPIRIT_FUZZING=ON ..;make
+  # cmake -DCMAKE_CXX_COMPILER=/path/to/afl/afl-clang-fast++ -DJSON_SPIRIT_FUZZING=ON LLVM_ROOT=/path/to/llvm ..;make
   # /path/to/afl/afl-fuzz -i /path/to/corpus -o FINDINGS -m none -- libs/json/test/fuzzer
 
   # AFL via g++
