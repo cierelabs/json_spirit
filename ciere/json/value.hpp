@@ -342,6 +342,10 @@ namespace ciere { namespace json
 
          operator string_t() const;
          operator double_t() const;
+         operator int_t() const;
+         operator bool_t() const;
+         operator unsigned int() const;
+         operator size_t() const;
 
          // -------------------------------------------------------------------------------
          // -------------------------------------------------------------------------------

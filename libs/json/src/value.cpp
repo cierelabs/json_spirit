@@ -436,6 +436,26 @@ namespace ciere { namespace json
      return get_as<double_t>();
    }
 
+   value::operator int_t() const
+   {
+     return get_as<int_t>();
+   }
+
+   value::operator bool_t() const
+   {
+     return get_as<bool_t>();
+   }
+
+   value::operator unsigned int() const
+   {
+     return get_as<unsigned int>();
+   }
+
+   value::operator size_t() const
+   {
+     return get_as<size_t>();
+   }
+   
 
    value array() { return array_t();  }
    value object(){ return object_t(); }

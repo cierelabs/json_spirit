@@ -21,18 +21,20 @@ project
       <toolset>gcc:<cxxflags>-std=c++0x
       <toolset>gcc:<cxxflags>-Wno-unused-local-typedefs
       <toolset>clang:<cxxflags>-std=c++11
+      <toolset>darwin:<cxxflags>-fvisibility=hidden
+      <toolset>darwin:<cxxflags>-fvisibility-inlines-hidden
+      <toolset>darwin:<cxxflags>-std=c++14
       <toolset>msvc:<cxxflags>/wd4996
       <define>BOOST_SPIRIT_USE_PHOENIX_V3=1
+      <use>/boost//headers
    ;
 
 lib json
    : [ glob libs/json/src/*.cpp ]
-     /boost//headers
    : <include>.
      <toolset>msvc:<link>static
    :
    : <include>.
-     <source>/boost//headers
    ;
 
 build-project libs/json/test ;
