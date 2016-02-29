@@ -1,7 +1,7 @@
 json spirit
 ===========
 
-A json library using Boost.Spirit 2.x for the parser.
+A json library using Boost.Spirit V2 and X3 for the parser.
 
 The primary goal of the json spirit library was to create a conformant json parser that resulted in a
 json object that could be manipulated much like in javascript or python.
