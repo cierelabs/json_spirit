@@ -28,49 +28,75 @@ namespace ciere { namespace json { namespace parser
    namespace ascii = boost::spirit::ascii;
    namespace phoenix = boost::phoenix;
 
-   typedef boost::uint32_t uchar; // a unicode code point
-
    namespace detail
    {
-      struct push_utf8
+      void push_utf8::operator()(std::string& utf8, uchar code_point) const
       {
-         template <typename Sig>
-         struct result { typedef void type; };
-
-         void operator()(std::string& utf8, uchar code_point) const
-         {
-            typedef std::back_insert_iterator<std::string> insert_iter;
-            insert_iter out_iter(utf8);
-            boost::utf8_output_iterator<insert_iter> utf8_iter(out_iter);
-            *utf8_iter++ = code_point;
-         }
-      };
-
-      struct push_esc
-      {
-         template <typename Sig>
-         struct result { typedef void type; };
-
-         void operator()(std::string& utf8, uchar c) const
-         {
-            switch (c)
-            {
-               case '"': utf8 += '"';          break;
-               case '\\': utf8 += '\\';        break;
-               case '/': utf8 += '/';          break;
-               case 'b': utf8 += '\b';         break;
-               case 'f': utf8 += '\f';         break;
-               case 'n': utf8 += '\n';         break;
-               case 'r': utf8 += '\r';         break;
-               case 't': utf8 += '\t';         break;
+         if (*prev_code_point > 0) {
+            // previous code_point is high surrogate
+            if (code_point >= 0xdc00 and code_point <= 0xdfff) {
+               code_point = 0x10000 + 
+                  ((*prev_code_point - 0xd800) << 10) +
+                  (code_point - 0xdc00);
+               *prev_code_point = 0;
+            } else {
+               // only high surrogate but no low surrogate
+               *prev_code_point = 0;
+               throw parse_error();
+            }
+         } else {
+            if (code_point >= 0xd800 and code_point <= 0xdbff) {
+               // high surrogate, store it and wait for low surrogate
+               *prev_code_point = code_point;
+               return;
+            } else if (code_point >= 0xdc00 and code_point <= 0xdfff) {
+               // where is the high surrogate?
+               throw parse_error();
             }
          }
-      };
+         typedef std::back_insert_iterator<std::string> insert_iter;
+         insert_iter out_iter(utf8);
+         boost::utf8_output_iterator<insert_iter> utf8_iter(out_iter);
+         *utf8_iter++ = code_point;
+      }
 
+      void push_esc::operator()(std::string& utf8, uchar c) const
+      {
+         if (*prev_code_point > 0)
+            throw parse_error();
+         switch (c)
+         {
+            case '"': utf8 += '"';          break;
+            case '\\': utf8 += '\\';        break;
+            case '/': utf8 += '/';          break;
+            case 'b': utf8 += '\b';         break;
+            case 'f': utf8 += '\f';         break;
+            case 'n': utf8 += '\n';         break;
+            case 'r': utf8 += '\r';         break;
+            case 't': utf8 += '\t';         break;
+         }
+      }
+
+      void push_char::operator()(std::string& utf8, uchar c) const
+      {
+         if (*prev_code_point > 0)
+            throw parse_error();
+         utf8 += c;
+      }
+
+      void check::operator()(void) const
+      {
+         if (*prev_code_point > 0)
+            throw parse_error();
+      }
 
       template< typename Iterator >
       unicode_string<Iterator>::unicode_string()
-         : unicode_string::base_type(double_quoted)
+         : unicode_string::base_type(double_quoted), code_point(0),
+         push_utf8_(&code_point),
+         push_esc_(&code_point),
+         push_char_(&code_point),
+         check_(&code_point)
       {
          qi::char_type char_;
          qi::_val_type _val;
@@ -80,13 +106,16 @@ namespace ciere { namespace json { namespace parser
          qi::repeat_type repeat;
          qi::hex_type hex;
          qi::standard::cntrl_type cntrl;
+         qi::eps_type eps;
 
          using boost::spirit::qi::uint_parser;
          using boost::phoenix::function;
 
          uint_parser<uchar, 16, 4, 4> hex4;
-         function<detail::push_utf8> push_utf8;
-         function<detail::push_esc> push_esc;
+         function<detail::push_utf8> push_utf8(push_utf8_);
+         function<detail::push_esc> push_esc(push_esc_);
+         function<detail::push_char> push_char(push_char_);
+         function<detail::check> check(check_);
 
          escape =
                 ('u' > hex4)           [push_utf8(_r1, _1)]
@@ -104,9 +133,10 @@ namespace ciere { namespace json { namespace parser
          double_quoted =
               '"'
             > *(  char_esc(_val)
-                | (char_ - '"' - '\\' - cntrl)    [_val += _1]
+                | (char_ - '"' - '\\' - cntrl)    [push_char(_val, _1)]
                )
             > '"'
+            > eps[check()]
             ;
 
          BOOST_SPIRIT_DEBUG_NODE(escape);
