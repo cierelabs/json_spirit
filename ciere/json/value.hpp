@@ -15,12 +15,8 @@
 #include <boost/container/stable_vector.hpp>
 #include <boost/exception/exception.hpp>
 #include <boost/iterator/transform_iterator.hpp>
-#include <boost/mpl/or.hpp>
 #include <boost/spirit/include/support_extended_variant.hpp>
-#include <boost/type_traits/is_enum.hpp>
-#include <boost/type_traits/is_floating_point.hpp>
-#include <boost/type_traits/is_integral.hpp>
-#include <boost/utility/enable_if.hpp>
+#include <type_traits>
 
 #include <map>
 #include <string>
@@ -83,31 +79,33 @@ namespace ciere { namespace json
          // -------------------------------------------------------------------------------
          // -------------------------------------------------------------------------------
          typedef value value_type;
-      
+
          value(null_t val = null_t())     : base_type(val) {}
-         value(bool_t val)                : base_type(val) {}
          value(string_t const & val)      : base_type(val) {}
          value(char const * val)          : base_type((string_t(val))) {}
          value(object_t const & val)      : base_type(val) {}
          value(array_t const & val)       : base_type(val) {}
          value(value const & rhs)         : base_type(rhs.get_ast()) {}
 
+         // bool type
+         template< typename T >
+         value( T val
+              , typename std::enable_if<std::is_same<T, bool>::value>::type* = 0 )
+            : base_type( (bool_t(val)) ) {}
+
          // floating point types will be converted to a double
          template< typename T >
          value( T val
-              , typename boost::enable_if<boost::is_floating_point<T> >::type* = 0)
+              , typename std::enable_if<std::is_floating_point<T>::value>::type* = 0)
             : base_type( (double_t(val)) ) {}
-
 
          // integral and enums are int type
          template< typename T >
          value( T val
-              , typename boost::enable_if<
-                 boost::mpl::or_<
-                    boost::is_integral<T>
-                  , boost::is_enum<T>
-                    >
-                 >::type* = 0)
+              , typename std::enable_if<
+                  (std::is_integral<T>::value && !std::is_same<T, bool>::value) ||
+                  std::is_enum<T>::value
+               >::type* = 0)
             : base_type( (int_t(val)) ) {}
 
          // -------------------------------------------------------------------------------
