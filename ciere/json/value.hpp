@@ -87,7 +87,9 @@ namespace ciere { namespace json
          value(array_t const & val)       : base_type(val) {}
          value(value const & rhs)         : base_type(rhs.get_ast()) {}
 
-         // bool type
+         // This ctor for bool is provided to allow safe implicit construction
+         // from bool e.g. value v = true. An unsafe implicit ctor for bool
+         // will allow bad code such as int* p = 0; value v = p;
          template< typename T >
          value( T val
               , typename std::enable_if<std::is_same<T, bool>::value>::type* = 0 )
@@ -96,7 +98,7 @@ namespace ciere { namespace json
          // floating point types will be converted to a double
          template< typename T >
          value( T val
-              , typename std::enable_if<std::is_floating_point<T>::value>::type* = 0)
+              , typename std::enable_if<std::is_floating_point<T>::value>::type* = 0 )
             : base_type( (double_t(val)) ) {}
 
          // integral and enums are int type
@@ -105,7 +107,7 @@ namespace ciere { namespace json
               , typename std::enable_if<
                   (std::is_integral<T>::value && !std::is_same<T, bool>::value) ||
                   std::is_enum<T>::value
-               >::type* = 0)
+               >::type* = 0 )
             : base_type( (int_t(val)) ) {}
 
          // -------------------------------------------------------------------------------
