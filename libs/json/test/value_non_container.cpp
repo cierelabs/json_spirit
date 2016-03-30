@@ -33,14 +33,14 @@ BOOST_AUTO_TEST_CASE(bool_test)
    BOOST_CHECK_EQUAL(v1.type(), json::bool_type);
 
    BOOST_CHECK_NE   (v1, v2);
-   BOOST_CHECK_EQUAL(v1, true);
-   BOOST_CHECK_EQUAL(v2, false);
+   BOOST_CHECK_EQUAL(v1, json::value{ true });
+   BOOST_CHECK_EQUAL(v2, json::value{ false });
 
    v1 = false;
    BOOST_CHECK_EQUAL(v1, v2);
 
    v1 = true;
-   BOOST_CHECK_NE   (v1, false);
+   BOOST_CHECK_NE   (v1, json::value{ false });
 
    BOOST_CHECK_THROW(v1.length(), json::not_container_type);
 }
@@ -50,11 +50,11 @@ BOOST_AUTO_TEST_CASE(string_test)
 {
    json::value v1("test");
    BOOST_CHECK_EQUAL(v1.type(), json::string_type);
-   BOOST_CHECK_EQUAL(v1, "test");
+   BOOST_CHECK_EQUAL(v1, json::value{ "test" });
 
    std::string s1("foo");
    json::value v2(s1);
-   BOOST_CHECK_EQUAL(v2, s1);
+   BOOST_CHECK_EQUAL(v2, json::value{ s1 });
 
    v1 = s1;
    BOOST_CHECK_EQUAL(v1, v2);
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE(string_test)
 
    v2 = "gorp";
    BOOST_CHECK_NE   (v1, v2);
-   BOOST_CHECK_NE   (v1, std::string("bar"));
+   BOOST_CHECK_NE   (v1, json::value{ std::string("bar") });
 
    BOOST_CHECK_THROW(v1.length(), json::not_container_type);
 }
@@ -74,35 +74,35 @@ BOOST_AUTO_TEST_CASE(int_test)
 {
    json::value v1(12);
    BOOST_CHECK_EQUAL(v1.type(), json::int_type);
-   BOOST_CHECK_EQUAL(v1, 12);
+   BOOST_CHECK_EQUAL(v1, json::value{ 12 });
 
    v1 = uint8_t(8);
    BOOST_CHECK_EQUAL(v1.type(), json::int_type);
-   BOOST_CHECK_EQUAL(v1, 8);
+   BOOST_CHECK_EQUAL(v1, json::value{ 8 });
 
    v1 = int8_t(-10);
    BOOST_CHECK_EQUAL(v1.type(), json::int_type);
-   BOOST_CHECK_EQUAL(v1, -10);
+   BOOST_CHECK_EQUAL(v1, json::value{ -10 });
 
    v1 = uint16_t(923);
    BOOST_CHECK_EQUAL(v1.type(), json::int_type);
-   BOOST_CHECK_EQUAL(v1, 923);
+   BOOST_CHECK_EQUAL(v1, json::value{ 923 });
 
    v1 = int16_t(-234);
    BOOST_CHECK_EQUAL(v1.type(), json::int_type);
-   BOOST_CHECK_EQUAL(v1, -234);
+   BOOST_CHECK_EQUAL(v1, json::value{ -234 });
 
    v1 = uint32_t(98);
    BOOST_CHECK_EQUAL(v1.type(), json::int_type);
-   BOOST_CHECK_EQUAL(v1, 98);
+   BOOST_CHECK_EQUAL(v1, json::value{ 98 });
 
    v1 = int32_t(-8);
    BOOST_CHECK_EQUAL(v1.type(), json::int_type);
-   BOOST_CHECK_EQUAL(v1, -8);
+   BOOST_CHECK_EQUAL(v1, json::value{ -8 });
 
    json::value v2(-8);
    BOOST_CHECK_EQUAL(v1, v2);
-   BOOST_CHECK_EQUAL(v1, -8.0);
+   BOOST_CHECK_EQUAL(v1, json::value{ -8.0 });
 
    BOOST_CHECK_THROW(v1.length(), json::not_container_type);
 }
@@ -112,11 +112,11 @@ BOOST_AUTO_TEST_CASE(float_test)
 {
    json::value v1(1.0);
    BOOST_CHECK_EQUAL(v1.type(), json::double_type);
-   BOOST_CHECK_EQUAL(v1, 1.0);
+   BOOST_CHECK_EQUAL(v1, json::value{ 1.0 });
 
    v1 = 987.5;
-   BOOST_CHECK_EQUAL(v1, 987.5);
-   BOOST_CHECK_NE   (v1, 987.1);
+   BOOST_CHECK_EQUAL(v1, json::value{ 987.5 });
+   BOOST_CHECK_NE   (v1, json::value{ 987.1 });
 
    json::value v2(987.5);
    BOOST_CHECK_EQUAL(v1, v2);
@@ -124,8 +124,8 @@ BOOST_AUTO_TEST_CASE(float_test)
    double d1 = 4.56342124;
    json::value v3(d1);
    BOOST_CHECK_EQUAL(v3.type(), json::double_type);
-   BOOST_CHECK_EQUAL(v3, d1);
-   BOOST_CHECK_NE   (v3, v1);
+   BOOST_CHECK_EQUAL(v3, json::value{ d1 });
+   BOOST_CHECK_NE   (v3, json::value{ v1 });
 
    v1 = d1;
    BOOST_CHECK_EQUAL(v1, v3);
@@ -133,7 +133,7 @@ BOOST_AUTO_TEST_CASE(float_test)
    float f1 = 123.4567;
    json::value v4(f1);
    BOOST_CHECK_EQUAL(v4.type(), json::double_type);
-   BOOST_CHECK_EQUAL(v4, f1);
+   BOOST_CHECK_EQUAL(v4, json::value{ f1 });
    BOOST_CHECK_NE   (v4, v1);
    v1 = f1;
    BOOST_CHECK_EQUAL(v1, v4);
@@ -148,7 +148,7 @@ BOOST_AUTO_TEST_CASE(value_test)
    json::value v1(1234);
    json::value v2(v1);
    BOOST_CHECK_EQUAL(v2.type(), json::int_type);
-   BOOST_CHECK_EQUAL(v2, 1234);
+   BOOST_CHECK_EQUAL(v2, json::value{ 1234 });
 
    BOOST_CHECK_THROW(v1.length(), json::not_container_type);
 }

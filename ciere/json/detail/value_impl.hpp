@@ -226,7 +226,7 @@ namespace ciere { namespace json
          p_object = boost::get<object_t>(&base_type::get());
       }
 
-      (*p_object)[name] = v;
+      (*p_object)[name] = value(v);
       return *this;
    }
 

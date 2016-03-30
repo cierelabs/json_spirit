@@ -83,25 +83,25 @@ namespace ciere { namespace json
          // -------------------------------------------------------------------------------
          // -------------------------------------------------------------------------------
          typedef value value_type;
-      
-         value(null_t val = null_t())     : base_type(val) {}
-         value(bool_t val)                : base_type(val) {}
-         value(string_t const & val)      : base_type(val) {}
-         value(char const * val)          : base_type((string_t(val))) {}
-         value(object_t const & val)      : base_type(val) {}
-         value(array_t const & val)       : base_type(val) {}
-         value(value const & rhs)         : base_type(rhs.get_ast()) {}
+
+         value(null_t val = null_t())           : base_type(val) {}
+         explicit value(bool_t val)             : base_type(val) {}
+         explicit value(string_t const & val)   : base_type(val) {}
+         explicit value(char const * val)       : base_type((string_t(val))) {}
+         explicit value(object_t const & val)   : base_type(val) {}
+         explicit value(array_t const & val)    : base_type(val) {}
+         value(value const & rhs)               : base_type(rhs.get_ast()) {}
 
          // floating point types will be converted to a double
          template< typename T >
-         value( T val
+         explicit value( T val
               , typename boost::enable_if<boost::is_floating_point<T> >::type* = 0)
             : base_type( (double_t(val)) ) {}
 
 
          // integral and enums are int type
          template< typename T >
-         value( T val
+         explicit value( T val
               , typename boost::enable_if<
                  boost::mpl::or_<
                     boost::is_integral<T>
@@ -109,6 +109,72 @@ namespace ciere { namespace json
                     >
                  >::type* = 0)
             : base_type( (int_t(val)) ) {}
+
+         // -------------------------------------------------------------------------------
+         // -------------------------------------------------------------------------------
+
+         value& operator=(null_t val)
+         {
+            base_type::operator=(val);
+            return *this;
+         }
+
+         value& operator=(bool_t val)
+         {
+            base_type::operator=(val);
+            return *this;
+         }
+
+         value& operator=(string_t const & val)
+         {
+            base_type::operator=(val);
+            return *this;
+         }
+
+         value& operator=(char const * val)
+         {
+            base_type::operator=(string_t(val));
+            return *this;
+         }
+
+         value& operator=(object_t const & val)
+         {
+            base_type::operator=(val);
+            return *this;
+         }
+
+         value& operator=(array_t const & val)
+         {
+            base_type::operator=(val);
+            return *this;
+         }
+
+         value& operator=(value const & rhs)
+         {
+            base_type::operator=(rhs.get_ast());
+            return *this;
+         }
+
+         template< typename T >
+         typename boost::enable_if<boost::is_floating_point<T>, value&>::type
+         operator=(T val)
+         {
+            base_type::operator=(double_t(val));
+            return *this;
+         }
+
+         template< typename T >
+         typename boost::enable_if<
+               boost::mpl::or_<
+                  boost::is_integral<T>
+                , boost::is_enum<T>
+               >,
+            value&>::type
+         operator=(T val)
+         {
+            base_type::operator=(int_t(val));
+            return *this;
+         }
 
          // -------------------------------------------------------------------------------
          // -------------------------------------------------------------------------------

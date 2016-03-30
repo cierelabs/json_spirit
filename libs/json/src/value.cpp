@@ -432,8 +432,8 @@ namespace ciere { namespace json
    }
 
 
-   value array() { return array_t();  }
-   value object(){ return object_t(); }
+   value array() { return value(array_t());  }
+   value object(){ return value(object_t()); }
 
 }}  // namespace ciere::json
 

@@ -18,9 +18,9 @@ if $(BOOST_ROOT)
 project
    : requirements
       <toolset>gcc:<cxxflags>-ftemplate-depth=300
-      <toolset>gcc:<cxxflags>-std=c++14
+      <toolset>gcc:<cxxflags>-std=c++1y
       <toolset>darwin:<cxxflags>-ftemplate-depth=300
-      <toolset>darwin:<cxxflags>-std=c++14
+      <toolset>darwin:<cxxflags>-std=c++1y
       <toolset>clang:<cxxflags>-std=c++1y
       <toolset>msvc:<cxxflags>/wd4996
       <define>BOOST_SPIRIT_USE_PHOENIX_V3=1
