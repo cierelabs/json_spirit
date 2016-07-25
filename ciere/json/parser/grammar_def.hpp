@@ -104,7 +104,7 @@ namespace ciere { namespace json { namespace parser
          double_quoted =
               '"'
             > *(  char_esc(_val)
-                | (char_ - '"' - '\\' - cntrl)    [_val += _1]
+                | (char_ - '"' - '\\' - char_(0x0, 0x1f))   [_val += _1]
                )
             > '"'
             ;
