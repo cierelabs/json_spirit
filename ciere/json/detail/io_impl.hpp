@@ -165,7 +165,7 @@ namespace ciere { namespace json
       typedef spirit::istream_iterator iterator_t;
       typedef parser::grammar<iterator_t> grammar_t;
 
-      bool skipws_was_set = input.flags() & std::ios::skipws;
+      bool skipws_was_set = (input.flags() & std::ios::skipws) != 0;
       input.unsetf(std::ios::skipws);
 
       iterator_t iterator(input), end;
