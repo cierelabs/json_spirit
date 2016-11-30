@@ -12,8 +12,12 @@
 #include <boost/spirit/include/support_istream_iterator.hpp>
 
 #include <string>
+#include <vector>
 
 typedef std::string::const_iterator string_iter_t;
 
 template struct ciere::json::parser::grammar<string_iter_t>;
 template struct ciere::json::parser::grammar<boost::spirit::istream_iterator>;
+
+using vector_uint8_iter_t = std::vector<uint8_t>::const_iterator;
+template struct ciere::json::parser::grammar<vector_uint8_iter_t>;
