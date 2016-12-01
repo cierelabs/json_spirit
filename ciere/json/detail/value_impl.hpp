@@ -43,7 +43,7 @@ namespace ciere { namespace json
 
          template<typename T>
          static R apply( T const & v
-                       , typename boost::enable_if<boost::is_convertible<R,T> >::type* dummy=0 )
+                       , typename boost::enable_if<boost::is_convertible<R,T> >::type* /*dummy*/=0 )
          {
             return v;
          }
@@ -55,8 +55,8 @@ namespace ciere { namespace json
          }
 
          template<typename T>
-         static R apply( T const & v
-                       , typename boost::disable_if<boost::is_convertible<R,T> >::type* dummy=0 )
+         static R apply( T const & /*v*/
+                       , typename boost::disable_if<boost::is_convertible<R,T> >::type* /*dummy*/=0 )
          {
             throw get_as_error();
             return R();
@@ -86,13 +86,13 @@ namespace ciere { namespace json
             return (v ? "true" : "false");
          }
 
-         static string_t apply( null_t const & )
+         static string_t apply( null_t const & /*v*/)
          {
             return "null";
          }
 
          template<typename T>
-         static string_t apply( T const & v )
+         static string_t apply( T const & /*v*/)
          {
             throw get_as_error();
             return "";
@@ -105,7 +105,7 @@ namespace ciere { namespace json
       {
          template<typename T>
          static bool_t apply( T const & v
-                            , typename boost::enable_if<boost::is_convertible<bool_t,T> >::type* dummy=0 )
+                            , typename boost::enable_if<boost::is_convertible<bool_t,T> >::type* /*dummy*/=0 )
          {
             return v;
          }
@@ -117,8 +117,8 @@ namespace ciere { namespace json
          }
 
          template<typename T>
-         static bool_t apply( T const & v
-                            , typename boost::disable_if<boost::is_convertible<bool_t,T> >::type* dummy=0 )
+         static bool_t apply( T const & /*v*/
+                            , typename boost::disable_if<boost::is_convertible<bool_t,T> >::type* /*dummy*/=0 )
          {
             throw get_as_error();
             return false;
