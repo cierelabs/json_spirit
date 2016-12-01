@@ -79,7 +79,6 @@ namespace ciere { namespace json { namespace parser
          qi::lit_type lit;
          qi::repeat_type repeat;
          qi::hex_type hex;
-         qi::standard::cntrl_type cntrl;
 
          using boost::spirit::qi::uint_parser;
          using boost::phoenix::function;
@@ -104,7 +103,7 @@ namespace ciere { namespace json { namespace parser
          double_quoted =
               '"'
             > *(  char_esc(_val)
-                | (char_ - '"' - '\\' - cntrl)    [_val += _1]
+                | (char_ - '"' - '\\' - char_(0x0, 0x1f))   [_val += _1]
                )
             > '"'
             ;

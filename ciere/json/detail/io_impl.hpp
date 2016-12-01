@@ -11,6 +11,7 @@
 
 #include "../exception.hpp"
 #include "../parser/grammar.hpp"
+#include "../parser/grammar_def.hpp"
 
 #include <boost/foreach.hpp>
 #include <boost/spirit/include/qi_expect.hpp>
@@ -22,6 +23,14 @@
 #include <ios>
 #include <istream>
 #include <string>
+#include <vector>
+
+using string_iter_t = std::string::const_iterator;
+using vector_uint8_iter_t = std::vector<uint8_t>::const_iterator;
+extern template struct ciere::json::parser::grammar<string_iter_t>;
+extern template struct ciere::json::parser::grammar<boost::spirit::istream_iterator>;
+extern template struct ciere::json::parser::grammar<vector_uint8_iter_t>;
+
 
 namespace ciere { namespace json
 {
@@ -165,7 +174,7 @@ namespace ciere { namespace json
       typedef spirit::istream_iterator iterator_t;
       typedef parser::grammar<iterator_t> grammar_t;
 
-      bool skipws_was_set = input.flags() & std::ios::skipws;
+      bool skipws_was_set = (input.flags() & std::ios::skipws) != 0;
       input.unsetf(std::ios::skipws);
 
       iterator_t iterator(input), end;
