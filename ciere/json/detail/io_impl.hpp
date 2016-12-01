@@ -11,6 +11,7 @@
 
 #include "../exception.hpp"
 #include "../parser/grammar.hpp"
+#include "../parser/grammar_def.hpp"
 
 #include <boost/foreach.hpp>
 #include <boost/spirit/include/qi_expect.hpp>
@@ -22,6 +23,14 @@
 #include <ios>
 #include <istream>
 #include <string>
+#include <vector>
+
+using string_iter_t = std::string::const_iterator;
+using vector_uint8_iter_t = std::vector<uint8_t>::const_iterator;
+extern template struct ciere::json::parser::grammar<string_iter_t>;
+extern template struct ciere::json::parser::grammar<boost::spirit::istream_iterator>;
+extern template struct ciere::json::parser::grammar<vector_uint8_iter_t>;
+
 
 namespace ciere { namespace json
 {
