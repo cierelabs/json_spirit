@@ -41,7 +41,7 @@ which would result in:
 ```
 
 
-#Building
+# Building
 
 We have CMake and Boost.Build support.
 
@@ -69,6 +69,7 @@ One way to use the json library in another CMake project is to treat it as an ex
 
 Here is an example of how to do that:
 
+```
   # Find json spirit
   ExternalProject_Add(
     dependency.json_spirit
@@ -95,14 +96,15 @@ Here is an example of how to do that:
     PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${SOURCE_DIR})
   
   add_dependencies(json_spirit dependency.json_spirit)
-
+```
 
 and for your specific target you can:
 
+```
     target_link_libraries(my_target
                           json_spirit
                           .... other libraries ... )
-
+```
 
 
 ## Boost.Build
@@ -128,7 +130,7 @@ You can build the tests via:
 
 # Documentation
 
-Coming soon.  Unit tests located in libs/json/test/*.cpp provide a good starting point for exploration of the functionality.
+Coming soon.  Unit tests located in `libs/json/test/*.cpp` provide a good starting point for exploration of the functionality.
 
 
 # Licensing
