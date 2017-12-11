@@ -431,6 +431,20 @@ namespace ciere { namespace json
       return boost::get<string_t>(base_type::get());
    }
 
+   value::operator double_t() const
+   {
+      return get_as<double_t>();
+   }
+
+   value::operator int_t() const
+   {
+      return get_as<int_t>();
+   }
+
+   value::operator bool_t() const
+   {
+      return get_as<bool_t>();
+   }
 
    value array() { return array_t();  }
    value object(){ return object_t(); }
