@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE(basic_get)
 
    {
       value = 42;
-      int tmp = value.get<json::int_t>();
+      int64_t tmp = value.get<json::int_t>();
       BOOST_CHECK_EQUAL(tmp, 42);
 
       BOOST_CHECK_THROW(value.get<json::float_t>(), boost::bad_get /*json::get_as_error*/ );

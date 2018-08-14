@@ -130,7 +130,7 @@ BOOST_AUTO_TEST_CASE(float_test)
    v1 = d1;
    BOOST_CHECK_EQUAL(v1, v3);
 
-   float f1 = 123.4567;
+   float f1 = 123.4567f;
    json::value v4(f1);
    BOOST_CHECK_EQUAL(v4.type(), json::double_type);
    BOOST_CHECK_EQUAL(v4, f1);

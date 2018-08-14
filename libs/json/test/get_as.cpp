@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(basic_get_as)
 
    {
       value = 42;
-      int tmp = value.get_as<json::int_t>();
+      int64_t tmp = value.get_as<json::int_t>();
       BOOST_CHECK_EQUAL(tmp, 42);
       std::string tmp_str = value.get_as<json::string_t>();
       BOOST_CHECK_EQUAL(tmp_str, "42");
@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(basic_get_as)
       BOOST_CHECK_EQUAL(tmp, 42.5);
       std::string tmp_str = value.get_as<json::string_t>();
       BOOST_CHECK_EQUAL(tmp_str, "42.5");
-      int tmp_int = value.get_as<json::int_t>();
+      int64_t tmp_int = value.get_as<json::int_t>();
       BOOST_CHECK_EQUAL(tmp_int, 42);
    }
 
