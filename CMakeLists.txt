@@ -44,6 +44,9 @@ if(JSON_SPIRIT_DEBUG_PARSER)
   )
 endif()
 
-enable_testing()
+option(BUILD_TESTING "Build the testing tree." ON)
+if (BUILD_TESTING)
+  enable_testing()
 
-add_subdirectory( libs/json/test )
+  add_subdirectory( libs/json/test )
+endif()
