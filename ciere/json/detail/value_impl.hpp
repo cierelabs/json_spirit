@@ -45,7 +45,7 @@ namespace ciere { namespace json
          static R apply( T const & v
                        , typename boost::enable_if<boost::is_convertible<R,T> >::type* /*dummy*/=0 )
          {
-            return v;
+            return static_cast<R>(v);
          }
 
 
@@ -107,7 +107,7 @@ namespace ciere { namespace json
          static bool_t apply( T const & v
                             , typename boost::enable_if<boost::is_convertible<bool_t,T> >::type* /*dummy*/=0 )
          {
-            return v;
+            return v != 0;
          }
 
          static bool_t apply( string_t const & v )
