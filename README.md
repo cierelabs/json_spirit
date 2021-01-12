@@ -135,7 +135,7 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 git_repository(
   name = "com_github_cierelabs_json_spirit",
   remote = "https://github.com/cierelabs/json_spirit",
-  commit = "<TODO>"
+  commit = "371c3b5d283f6272860d4d2eac996591ffad259c"
 )
 
 load("@com_github_cierelabs_json_spirit//:json_spirit_deps.bzl", "json_spirit_deps")
