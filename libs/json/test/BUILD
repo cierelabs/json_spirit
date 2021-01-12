@@ -1,3 +1,5 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
 cc_test(
     name = "construct_test",
     srcs = ["construct.cpp"],
