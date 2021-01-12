@@ -19,7 +19,7 @@
 #include <boost/spirit/include/qi.hpp>
 #include <string>
 
-#include <ciere/json/io.hpp> // BOOST_SPIRIT_DEBUG_NODE
+#include "ciere/json/io.hpp" // BOOST_SPIRIT_DEBUG_NODE
 
 namespace ciere { namespace json { namespace parser
 {

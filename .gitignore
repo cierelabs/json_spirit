@@ -3,3 +3,7 @@
 
 /bin/
 *.DS_Store
+
+bazel-*
+
+build

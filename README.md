@@ -126,7 +126,36 @@ You can build the tests via:
     cd json_spirit/libs/json/test
     bjam
 
+## Bazel Build
+For bazel depending on this library using the bazel build system add the following to your `WORKSPACE` file
 
+```python
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
+git_repository(
+  name = "com_github_cierelabs_json_spirit",
+  remote = "https://github.com/cierelabs/json_spirit",
+  commit = "371c3b5d283f6272860d4d2eac996591ffad259c"
+)
+
+load("@com_github_cierelabs_json_spirit//:json_spirit_deps.bzl", "json_spirit_deps")
+
+json_spirit_deps()
+
+load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
+
+boost_deps()
+```
+
+The library can now be depended on using the target `@com_github_cierelabs_json_spirit:json_spirit` e.g.
+
+``` python
+cc_library(
+  name = "some_lib",
+  deps = ["@com_github_cierelabs_json_spirit:json_spirit"],
+  # ...
+)
+```
 
 # Documentation
 

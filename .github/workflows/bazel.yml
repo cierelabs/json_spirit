@@ -1,0 +1,16 @@
+name: Bazel
+
+on: [push]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: build
+      run: bazelisk build //...
+
+    - name: test
+      run: bazelisk test //...
